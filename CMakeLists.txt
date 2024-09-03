@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.20)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_C_COMPILER "clang")
+set(CMAKE_CXX_COMPILER "clang++")
+project(naive-tower-defense)
+
+file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc")
+add_executable(game ${SOURCES})
+target_compile_options(game PUBLIC -fno-rtti -fno-exceptions)
+
+add_subdirectory(engine)
