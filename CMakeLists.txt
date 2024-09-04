@@ -12,3 +12,5 @@ add_executable(game ${SOURCES})
 target_compile_options(game PUBLIC -fno-rtti -fno-exceptions)
 
 add_subdirectory(engine)
+target_link_libraries(game engine)
+target_include_directories(game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)

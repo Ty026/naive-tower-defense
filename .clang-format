@@ -1,0 +1,13 @@
+SortIncludes: false
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+ColumnLimit: 0
+AlignConsecutiveDeclarations: true
+PointerAlignment: "Right"
+BreakBeforeBraces: Custom
+RequiresClausePosition: WithPreceding
+AllowShortEnumsOnASingleLine: true
+BraceWrapping:
+  SplitEmptyFunction: false
+BreakBeforeBinaryOperators: None
+AllowShortLoopsOnASingleLine: true
