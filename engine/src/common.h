@@ -10,3 +10,5 @@ requires std::constructible_from<T, Args...>
 constexpr Scope<T> MakeScope(Args &&...args) {
   return std::make_unique<T>(std::forward<Args>(args)...);
 }
+
+using real = float;
