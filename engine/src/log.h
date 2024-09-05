@@ -27,6 +27,7 @@ void Log::Info(std::format_string<Args...> fmt, Args &&...args) {
   std::format_to(std::back_inserter(log_buffer_), fmt, std::forward<Args>(args)...);
   log_buffer_.push_back('\0');
   printf("[Info] %s\n", log_buffer_.data());
+  fflush(stdout);
 }
 
 template <typename... Args>
@@ -35,6 +36,7 @@ void Log::Trace(std::format_string<Args...> fmt, Args &&...args) {
   std::format_to(std::back_inserter(log_buffer_), fmt, std::forward<Args>(args)...);
   log_buffer_.push_back('\0');
   printf("[Trace] %s\n", log_buffer_.data());
+  fflush(stdout);
 }
 
 template <typename... Args>
@@ -43,6 +45,7 @@ void Log::Warn(std::format_string<Args...> fmt, Args &&...args) {
   std::format_to(std::back_inserter(log_buffer_), fmt, std::forward<Args>(args)...);
   log_buffer_.push_back('\0');
   printf("[Warn] %s\n", log_buffer_.data());
+  fflush(stdout);
 }
 
 template <typename... Args>
@@ -51,4 +54,5 @@ void Log::Error(std::format_string<Args...> fmt, Args &&...args) {
   std::format_to(std::back_inserter(log_buffer_), fmt, std::forward<Args>(args)...);
   log_buffer_.push_back('\0');
   printf("[Error] %s\n", log_buffer_.data());
+  fflush(stdout);
 }

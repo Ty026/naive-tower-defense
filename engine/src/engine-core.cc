@@ -2,6 +2,7 @@
 #include "engine-core.h"
 #include <cassert>
 #include "platform-window.h"
+#include "renderer.h"
 
 Engine *Engine::instance_{nullptr};
 
@@ -14,6 +15,7 @@ Engine *Engine::Initialize(std::string_view title, int width, int height) {
 Engine::Engine(std::string_view title, int width, int height) {
   window_ = MakeScope<Window>(title, width, height);
   window_->set_event_callback([this](const Event &e) { OnEvent(e); });
+  Renderer::Initialize();
 }
 
 void Engine::OnEvent(const Event &e) {
@@ -21,6 +23,10 @@ void Engine::OnEvent(const Event &e) {
   case Event::Type::WindowClose:
     is_running_ = false;
     break;
+  case Event::Type::WindowResize: {
+    Renderer::set_viewport(window_->framebuffer_size());
+    break;
+  }
   default:
     // TODO
     break;
@@ -33,6 +39,8 @@ void Engine::RunLoop() {
     Tick();
     window_->Update();
   }
+
+  Renderer::Release();
 }
 
 void Engine::Tick() {
