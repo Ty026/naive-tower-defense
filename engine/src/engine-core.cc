@@ -44,4 +44,7 @@ void Engine::RunLoop() {
 }
 
 void Engine::Tick() {
+  Renderer::Begin();
+  Renderer::Draw({-1, -1}, {2, 2}, Color::Red);
+  Renderer::End();
 }
