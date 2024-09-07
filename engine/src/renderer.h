@@ -1,6 +1,7 @@
 #pragma once
 #include "vec2.h"
 #include "color.h"
+#include "camera-2d.h"
 
 class Renderer {
 public:
@@ -9,7 +10,7 @@ public:
   static void Initialize();
   static void Release();
   static void Clear();
-  static void Begin();
+  static void Begin(Camera2D &c);
   static void End();
   static void Draw(const vec2 &position, const vec2 &size, const Color &color);
 

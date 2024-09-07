@@ -79,3 +79,7 @@ bool Shader::CompileFromSource(std::string_view vert_source, std::string_view fr
   }
   return true;
 }
+
+void Shader::UploadMatrix2x3(std::string_view name, const real *values) {
+  GL_CHECK(glUniformMatrix3x2fv(glGetUniformLocation(program_, name.data()), 1, GL_FALSE, values));
+}

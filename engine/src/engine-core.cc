@@ -44,7 +44,9 @@ void Engine::RunLoop() {
 }
 
 void Engine::Tick() {
-  Renderer::Begin();
-  Renderer::Draw({-1, -1}, {2, 2}, Color::Red);
+  Camera2D c;
+  c.set_viewport(window_->size());
+  Renderer::Begin(c);
+  Renderer::Draw({0, 0}, {100, 100}, Color::Red);
   Renderer::End();
 }

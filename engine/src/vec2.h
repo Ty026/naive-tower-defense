@@ -11,8 +11,11 @@ public:
   constexpr vec2() : x(0), y(0) {}
   constexpr vec2(real x, real y) : x(x), y(y) {}
   constexpr vec2(real s) : x(s), y(s) {}
-  constexpr vec2 operator+(const vec2 &rhs) const { return {x + rhs.x, y + rhs.y}; }
-  constexpr vec2 operator*(const vec2 &rhs) const { return {x * rhs.x, y * rhs.y}; }
+  constexpr vec2  operator+(const vec2 &rhs) const { return {x + rhs.x, y + rhs.y}; }
+  constexpr vec2  operator*(const vec2 &rhs) const { return {x * rhs.x, y * rhs.y}; }
+  constexpr vec2  operator*(real s) const { return {x * s, y * s}; }
+  constexpr real &operator[](int index) { return coord[index]; }
+  constexpr real  operator[](int index) const { return coord[index]; }
 
   union {
     struct {

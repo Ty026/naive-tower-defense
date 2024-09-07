@@ -1,10 +1,11 @@
+#include "log.h"
 #include <cstdlib>
 #define GLFW_INCLUDE_NONE
 #include "platform-window.h"
 #include <GLFW/glfw3.h>
 #include "gl.h"
 
-Window::Window(std::string_view title, int w, int h) {
+Window::Window(std::string_view title, int w, int h) : size_(w, h) {
   if (glfwPlatformSupported(GLFW_PLATFORM_WAYLAND))
     glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WAYLAND);
 

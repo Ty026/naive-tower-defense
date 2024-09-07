@@ -16,6 +16,7 @@ Vertex            *vertices_base{nullptr};
 int               *indices{nullptr};
 Scope<VertexArray> va;
 Scope<Shader>      shader;
+Camera2D          *camera;
 
 int num_bytes() { return (vertices - vertices_base) * sizeof(Vertex); }
 
@@ -65,7 +66,9 @@ void Renderer::Clear() {
   GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
 }
 
-void Renderer::Begin() {
+void Renderer::Begin(Camera2D &p_camera) {
+  camera = &p_camera;
+  camera->BuildMatrix();
   BeginBatch();
 }
 
@@ -73,7 +76,7 @@ void Renderer::End() {
   if (current_indices_index > 0) {
     shader->Bind();
     va->Bind();
-    // shader->UploadMatrix2x3("view_projection", camera->matrix());
+    shader->UploadMatrix2x3("view_projection", camera->matrix());
     va->DrawIndexed(vertices_base, num_bytes(), indices, current_indices_index);
   }
 }
