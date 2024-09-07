@@ -12,6 +12,7 @@ public:
   bool CompileFromSource(std::string_view vert_source, std::string_view frag_source);
   void Bind();
   void UploadMatrix2x3(std::string_view name, const real *values);
+  void UploadIntArray(const std::string_view name, const int *values, int count);
 
 private:
   GLuint Compile(std::string_view source, GLenum type);
