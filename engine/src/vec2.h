@@ -16,6 +16,7 @@ public:
   constexpr vec2  operator*(real s) const { return {x * s, y * s}; }
   constexpr real &operator[](int index) { return coord[index]; }
   constexpr real  operator[](int index) const { return coord[index]; }
+  constexpr vec2  operator-() const { return vec2(-x, -y); }
 
   union {
     struct {

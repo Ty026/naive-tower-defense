@@ -53,3 +53,8 @@ void Transform::operator*=(const Transform &right) {
   columns_[1][0] = y0;
   columns_[1][1] = y1;
 }
+
+vec2 Transform::operator*(const vec2 &v) const {
+  return {columns_[0].x * v.x + columns_[1].x * v.y + columns_[2].x,
+          columns_[0].y * v.x + columns_[1].y * v.y + columns_[2].y};
+}

@@ -154,3 +154,19 @@ void Renderer::Draw(Ref<Texture> texture, const vec2 &pos, const vec2 &size, con
   ADD_VERTEX(vec2(pos.x, pos.y + size.h), tint, tex_index, uv_min.x, uv_max.y);
   AddQuadIndices();
 }
+
+void Renderer::Draw(Ref<Texture> texture, const vec2 &size, const Transform &t,
+                    const vec2 &uv_min, const vec2 &uv_max,
+                    const vec2 &origin, const Color &tint) {
+  PreDrawCommandCheck();
+  int  tex_index = CalculateTextureIndex(texture);
+  vec2 tl = t * -origin;
+  vec2 tr = t * vec2(-origin.x + size.w, -origin.y);
+  vec2 br = t * vec2(-origin.x + size.w, -origin.y + size.h);
+  vec2 bl = t * vec2(-origin.x, -origin.y + size.h);
+  ADD_VERTEX(tl, tint, tex_index, uv_min.x, uv_min.y);
+  ADD_VERTEX(tr, tint, tex_index, uv_max.x, uv_min.y);
+  ADD_VERTEX(br, tint, tex_index, uv_max.x, uv_max.y);
+  ADD_VERTEX(bl, tint, tex_index, uv_min.x, uv_max.y);
+  AddQuadIndices();
+}

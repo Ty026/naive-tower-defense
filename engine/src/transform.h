@@ -12,8 +12,10 @@ public:
   void Ortho(real left, real right, real bottom, real top);
   void Translate(const vec2 &translation);
 
+  vec2     &operator[](int index) { return columns_[index]; }
   void      operator*=(const Transform &right);
   Transform operator*(const Transform &rhs) const;
+  vec2      operator*(const vec2 &v) const;
 
 private:
   vec2 columns_[3];
