@@ -54,7 +54,7 @@ void Engine::Tick() {
       0, 0, 255, 255,
       255, 255, 0, 255};
   Ref<Texture> texture = MakeRef<Texture>(2, 2, 4, bitmapdata, false);
-  Renderer::Draw({0, 0}, {100, 100}, Color::Red);
-  Renderer::Draw(texture, {100, 100}, {100, 100}, {0, 0}, {1, 1}, Color::White);
+  Renderer::Draw({0, 0}, {100, 100}, Color::Yellow);
+  Renderer::Draw(texture, {100, 100}, {100, 100}, {0, 0}, {1, 1});
   Renderer::End();
 }

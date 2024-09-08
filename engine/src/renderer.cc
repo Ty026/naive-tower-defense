@@ -75,7 +75,7 @@ void Renderer::Initialize() {
       {VertexLayout::DataType::F2},
       {VertexLayout::DataType::I1},
   });
-  shader = MakeScope<Shader>();
+  shader = MakeScope<Shader>(max_texture_units);
   shader->CompileFromFile("assets/basic.vs", "assets/basic.fs");
   shader->Bind();
 

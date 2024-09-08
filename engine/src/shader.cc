@@ -2,6 +2,7 @@
 #include "log.h"
 #include "file-reader.h"
 #include <cassert>
+#include <regex>
 
 namespace {
 std::string LoadFile(std::string_view path) {
@@ -18,7 +19,7 @@ std::string LoadFile(std::string_view path) {
 }
 } // namespace
 
-Shader::Shader() {
+Shader::Shader(int max_texture_units) : max_texture_units_(max_texture_units) {
   GL_CHECK(program_ = glCreateProgram());
 }
 
@@ -60,7 +61,7 @@ bool Shader::CompileFromFile(std::string_view vert_filename, std::string_view fr
 bool Shader::CompileFromSource(std::string_view vert_source, std::string_view frag_source) {
   auto vert = Compile(vert_source, GL_VERTEX_SHADER);
   assert(vert != GL_INVALID_VALUE);
-  auto frag = Compile(frag_source, GL_FRAGMENT_SHADER);
+  auto frag = Compile(GenerateFSCodeFromSource(frag_source), GL_FRAGMENT_SHADER);
   assert(frag != GL_INVALID_VALUE);
   GL_CHECK(glAttachShader(program_, vert));
   GL_CHECK(glAttachShader(program_, frag));
@@ -88,4 +89,26 @@ void Shader::UploadIntArray(const std::string_view name, const int *values, int 
   int32_t location;
   GL_CHECK(location = glGetUniformLocation(program_, name.data()));
   GL_CHECK(glUniform1iv(location, count, values));
+}
+
+// this function generates code by replacing two placeholders in the template:
+// 1. `/*$max_textures*/` is replaced with the actual number of texture units
+// 2. `/*each in textures*/` is replaced with a series of `switch` statements
+std::string Shader::GenerateFSCodeFromSource(std::string_view template_code) {
+  // TODO: maybe a simple parser for generating this code
+  std::string code = std::regex_replace(
+      template_code.data(),
+      std::regex(R"(/\*\$max_textures\*/)", std::regex_constants::ECMAScript),
+      std::to_string(max_texture_units_));
+  std::stringstream cases;
+  for (int i = 0; i < max_texture_units_; ++i) {
+    cases << "case " << i << ":\n"
+          << "    FragColor = texture(textures[" << i << "], tex_coord);\n"
+          << "    break;\n";
+  }
+
+  code = std::regex_replace(
+      code, std::regex(R"(/\*each in textures\*/)", std::regex_constants::ECMAScript),
+      cases.str());
+  return code;
 }

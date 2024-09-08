@@ -5,7 +5,7 @@
 
 class Shader {
 public:
-  Shader();
+  Shader(int max_texture_units);
   ~Shader();
 
   bool CompileFromFile(std::string_view vert_filename, std::string_view frag_filename);
@@ -15,6 +15,8 @@ public:
   void UploadIntArray(const std::string_view name, const int *values, int count);
 
 private:
-  GLuint Compile(std::string_view source, GLenum type);
-  GLuint program_;
+  GLuint      Compile(std::string_view source, GLenum type);
+  std::string GenerateFSCodeFromSource(std::string_view template_code);
+  GLuint      program_;
+  int         max_texture_units_;
 };
