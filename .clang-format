@@ -5,6 +5,9 @@ ColumnLimit: 0
 AlignConsecutiveDeclarations: true
 PointerAlignment: "Right"
 BreakBeforeBraces: Custom
+BreakConstructorInitializers: AfterColon
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+AllowShortFunctionsOnASingleLine: All
 RequiresClausePosition: WithPreceding
 AllowShortEnumsOnASingleLine: true
 BraceWrapping:
