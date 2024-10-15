@@ -9,6 +9,7 @@ namespace {
 constexpr const int kMaxTriangles = 10000;
 constexpr const int kMaxVertices = kMaxTriangles * 3;
 constexpr const int kMaxIndices = kMaxTriangles * 3;
+constexpr const int kTextureNone = -1;
 
 int                       next_vertex_index{0};
 int                       current_indices_index{0};
@@ -137,11 +138,23 @@ void Renderer::PreDrawCommandCheck(int next_max_indices) {
 
 void Renderer::Draw(const vec2 &position, const vec2 &size, const Color &color) {
   PreDrawCommandCheck();
-  ADD_VERTEX(position, color, -1, 0, 0);
-  ADD_VERTEX((position + vec2(size.w, 0)), color, -1, 0, 0);
-  ADD_VERTEX((position + size), color, -1, 0, 0);
-  ADD_VERTEX((position + vec2(0, size.h)), color, -1, 0, 0);
+  ADD_VERTEX(position, color, kTextureNone, 0, 0);
+  ADD_VERTEX((position + vec2(size.w, 0)), color, kTextureNone, 0, 0);
+  ADD_VERTEX((position + size), color, kTextureNone, 0, 0);
+  ADD_VERTEX((position + vec2(0, size.h)), color, kTextureNone, 0, 0);
+  AddQuadIndices();
+}
 
+void Renderer::Draw(const vec2 size, const Transform &t, const Color &color, const vec2 &origin) {
+  PreDrawCommandCheck();
+  vec2 tl = t * -origin;
+  vec2 tr = t * vec2(-origin.x + size.w, -origin.y);
+  vec2 br = t * vec2(-origin.x + size.w, -origin.y + size.h);
+  vec2 bl = t * vec2(-origin.x, -origin.y + size.h);
+  ADD_VERTEX(tl, color, kTextureNone, 0, 0);
+  ADD_VERTEX(tr, color, kTextureNone, 0, 0);
+  ADD_VERTEX(br, color, kTextureNone, 0, 0);
+  ADD_VERTEX(bl, color, kTextureNone, 0, 0);
   AddQuadIndices();
 }
 

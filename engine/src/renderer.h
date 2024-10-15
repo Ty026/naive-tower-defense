@@ -14,6 +14,7 @@ public:
   static void Begin(Camera2D &c);
   static void End();
   static void Draw(const vec2 &position, const vec2 &size, const Color &color);
+  static void Draw(const vec2 size, const Transform &, const Color &color, const vec2 &origin = vec2(0, 0));
   static void Draw(Ref<Texture> texture, const vec2 &position, const vec2 &size, const vec2 &uv_min = {0, 0}, const vec2 &uv_max = {1, 1}, const Color &tint = Color::White);
   static void Draw(Ref<Texture> texture, const vec2 &size, const Transform &, const vec2 &uv_min, const vec2 &uv_max, const vec2 &origin, const Color &tint = Color::White);
 
