@@ -3,7 +3,6 @@
 #include <cassert>
 #include "platform-window.h"
 #include "renderer.h"
-#include "texture.h"
 
 Engine *Engine::instance_{nullptr};
 
@@ -45,20 +44,7 @@ void Engine::RunLoop() {
 }
 
 void Engine::Tick() {
-  Camera2D c;
-  c.set_viewport(window_->size());
-  Renderer::Begin(c);
-  uint8_t bitmapdata[] = {
-      255, 0, 0, 255,
-      0, 255, 0, 255,
-      0, 0, 255, 255,
-      255, 255, 0, 255};
-  Ref<Texture> texture = MakeRef<Texture>(2, 2, 4, bitmapdata, false);
-  Renderer::Draw({0, 0}, {100, 100}, Color::Yellow);
-  Transform t;
-  t.Translate({100, 100});
-  t[0].x = 50;
-  t[1].y = 50;
-  Renderer::Draw(texture, {2, 2}, t, {0, 0}, {1, 1}, {0, 0});
-  Renderer::End();
+  Renderer::Clear();
+  scenes_.Update();
+  scenes_.Render();
 }
